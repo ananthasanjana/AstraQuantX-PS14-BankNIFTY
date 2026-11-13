@@ -1,0 +1,10 @@
+,VWAP | no RF,VWAP | with RF,Bollinger | no RF,Bollinger | with RF,DUAL | no RF,DUAL | with RF
+Hit rate of acted-on signals %,42.4,41.4,45.2,50.0,51.2,60.0
+Trades taken,33.0,20.0,40.0,25.0,30.0,19.0
+Net P&L (Rs),12148.0,4380.0,66582.0,38395.0,86843.0,100362.0
+ROI %,2.43,0.88,13.32,7.68,17.37,20.07
+Sharpe (ann.),0.88,0.34,3.54,2.61,5.96,7.24
+Max drawdown %,-7.41,-7.18,-5.72,-7.7,-5.88,-3.15
+Win rate %,39.4,35.0,42.5,44.0,46.7,57.9
+Profit factor,1.07,1.04,1.37,1.33,1.66,2.46
+Stop-loss hit rate %,60.6,65.0,55.0,56.0,46.7,42.1

@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LuminX</title>
+<meta name="description" content="LuminX - automated Bank NIFTY options trading with VWAP + Bollinger Bands + Random Forest - interactive backtest and paper-trading terminal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#home"><span class="brand-mark">LX</span><span class="brand-text">Lumin<span class="brand-x">X</span><span class="brand-sub">PS 14</span></span></a>
+  <nav class="tabs" id="tabs">
+    <a href="#home" data-tab="home">Home</a>
+    <a href="#terminal" data-tab="terminal">Terminal</a>
+    <a href="#signals" data-tab="signals">Signals</a>
+    <a href="#backtest" data-tab="backtest">Backtest</a>
+    <a href="#method" data-tab="method">Method</a>
+    <a href="#review3" data-tab="review3">Review 3</a>
+  </nav>
+  <span class="paper-badge" title="Every order on this site is simulated on historical data">Paper trading</span>
+</header>
+
+<main>
+<!-- ============================== HOME ============================== -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div class="hero-img" role="img" aria-label="Cover artwork: red market grid with a falling line and two hands pointing down and up"></div>
+    <div class="hero-line top"></div>
+    <div class="hero-content">
+      <div class="hero-kicker">LuminX</div>
+      <h1 class="hero-title">Automated Bank NIFTY<br>Options Trading<br>Using Two Technical<br>Indicators</h1>
+      <div class="hero-cta">
+        <a class="btn btn-ink" href="#terminal">Open trading terminal &rarr;</a>
+        <a class="btn btn-paper" href="#backtest">See backtest</a>
+      </div>
+    </div>
+    <div class="hero-foot"><span>Problem Statement 14</span><div class="hero-line bottom"></div></div>
+  </div>
+
+  <div class="band band-black">
+    <h2 class="pix-h">-&gt; Headline result: DUAL + Random Forest &lt;--</h2>
+    <p class="lede" id="home-lede"></p>
+    <div class="kpi-row" id="home-kpis"></div>
+  </div>
+
+  <div class="band band-red">
+    <h2 class="pix-h ink">Why VWAP + Bollinger Bands work together</h2>
+    <p class="lede ink">Each indicator covers the other's blind spot. The Random Forest only accepts or rejects signals; it is not a third indicator.</p>
+    <div class="trio">
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Direction</div><div class="tc-v">VWAP</div><p>Price above the session VWAP = buyers in control. Only CE trades are allowed above VWAP, only PE below.</p></div>
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Timing</div><div class="tc-v">Bollinger Bands</div><p>Wait for a pullback: z-score dips to &minus;0.5&sigma; and turns back up (mirror for PE). Enter on a confirmed bar close.</p></div>
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Filter</div><div class="tc-v">Random Forest &nbsp;p&#770; &ge; &tau;</div><p>300 trees retrained every session on past signals only. Acts when the predicted chance of hitting +12% before &minus;6% is at least 50%.</p></div>
+    </div>
+  </div>
+
+  <div class="band band-black">
+    <h2 class="pix-h pink">-&gt; Team Members: Project Contributors &lt;--</h2>
+    <div class="team">
+      <div class="team-card"><div>Sahasra<br>Sangireddy</div></div>
+      <div class="team-card"><div>Anantha<br>Sanjana</div></div>
+      <div class="team-card"><div>Varenya<br>Pilla</div></div>
+      <div class="team-card"><div>Veera Bhavik<br>Reddy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TERMINAL ============================== -->
+<section class="page" id="page-terminal" hidden>
+  <div class="term-head">
+    <div>
+      <h2 class="pix-h">-&gt; Paper Trading Terminal &lt;--</h2>
+      <p class="muted small">Replays the real 5-minute Bank NIFTY bars. Signals appear exactly when the bar closes, like a live feed. Buy and sell ATM CE / PE options with a &#8377;5,00,000 paper account. No real orders are sent.</p>
+    </div>
+    <div class="term-model">
+      <label class="lbl" for="t-model">Strategy shown</label>
+      <select id="t-model"></select>
+    </div>
+  </div>
+
+  <div class="term-grid">
+    <div class="term-main">
+      <div class="replay-bar">
+        <button class="btn btn-sm" id="t-reset" title="Restart replay at the selected session">&#9198; Restart</button>
+        <button class="btn btn-sm btn-red" id="t-play" title="Play / pause (space)">&#9654; Play</button>
+        <button class="btn btn-sm" id="t-step" title="Advance one 5-minute bar (&rarr;)">+1 bar</button>
+        <button class="btn btn-sm" id="t-next" title="Run to the next signal (N)">Next signal &#9197;</button>
+        <label class="lbl inline" for="t-speed">Speed</label>
+        <select id="t-speed">
+          <option value="1">1 bar/s</option><option value="3">3 bars/s</option><option value="6" selected>6 bars/s</option>
+          <option value="15">15 bars/s</option><option value="40">40 bars/s</option>
+        </select>
+        <label class="lbl inline" for="t-session">Session</label>
+        <select id="t-session"></select>
+        <span class="clock" id="t-clock">--</span>
+      </div>
+      <div class="chart-wrap"><div id="chart-main" class="chart-main"></div>
+        <div class="legend" id="t-legend">
+          <span><i class="sw" style="background:#f2f2f2"></i>Close</span>
+          <span><i class="sw" style="background:#6FA8DC"></i>VWAP</span>
+          <span><i class="sw dash" style="border-color:#F4A6A6"></i>BB mid (MA20)</span>
+          <span><i class="sw" style="background:#E06666"></i>BB &plusmn;2&sigma;</span>
+          <span><b class="ce">&#9650;</b> CE &nbsp;<b class="pe">&#9660;</b> PE &nbsp;<b class="mut">&#10005;</b> RF rejected</span>
+        </div>
+      </div>
+      <div class="chart-wrap z"><div id="chart-z" class="chart-z"></div><span class="zlabel">z-score &nbsp;(&plusmn;2 bands, &plusmn;0.5 DUAL pullback)</span></div>
+
+      <div class="feed-wrap">
+        <h3 class="pix-s">Signal feed</h3>
+        <ol class="feed" id="t-feed"><li class="muted">Press <b>Play</b> or <b>Next signal</b> to start the replay.</li></ol>
+      </div>
+    </div>
+
+    <aside class="term-side">
+      <div class="panel">
+        <div class="panel-h">Market <span class="muted small" id="t-bar-ix"></span></div>
+        <div class="quote">
+          <div><span class="lbl">Bank NIFTY</span><span class="big mono" id="q-spot">--</span><span class="chg mono" id="q-chg"></span></div>
+        </div>
+        <div class="ind-grid">
+          <div><span class="lbl">VWAP</span><span class="mono" id="q-vwap">--</span></div>
+          <div><span class="lbl">d (vs VWAP)</span><span class="mono" id="q-d">--</span></div>
+          <div><span class="lbl">z-score</span><span class="mono" id="q-z">--</span></div>
+          <div><span class="lbl">Bandwidth</span><span class="mono" id="q-bw">--</span></div>
+        </div>
+        <div class="state-pills" id="q-state"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">Option chain &middot; ATM <span class="mono" id="oc-k">--</span></div>
+        <div class="oc">
+          <div class="oc-cell ce"><span class="lbl">CE premium</span><span class="mono big2" id="oc-ce">--</span><span class="lbl" id="oc-ced"></span></div>
+          <div class="oc-cell pe"><span class="lbl">PE premium</span><span class="mono big2" id="oc-pe">--</span><span class="lbl" id="oc-ped"></span></div>
+        </div>
+        <div class="ticket">
+          <label class="lbl" for="tk-lots">Lots (1 lot = <span id="tk-lotsize"></span> qty)</label>
+          <div class="lots-row">
+            <button class="btn btn-sm" id="tk-minus" aria-label="Fewer lots">&minus;</button>
+            <input id="tk-lots" type="number" min="1" max="50" value="7">
+            <button class="btn btn-sm" id="tk-plus" aria-label="More lots">+</button>
+            <button class="btn btn-sm" id="tk-auto" title="Size for 1% capital risk at a 6% stop">1% risk</button>
+          </div>
+          <div class="buy-row">
+            <button class="btn btn-ce" id="tk-ce">Buy CE <kbd>C</kbd></button>
+            <button class="btn btn-pe" id="tk-pe">Buy PE <kbd>P</kbd></button>
+          </div>
+          <label class="chk"><input type="checkbox" id="tk-ts" checked> Auto exit at +12% target / &minus;6% stop / 12 bars</label>
+          <label class="chk"><input type="checkbox" id="tk-rules" checked> Enforce risk rules (3 trades/day, &minus;2% daily cap, 09:30&ndash;14:30 entries)</label>
+          <label class="chk"><input type="checkbox" id="tk-copy"> Copy the bot: auto-take every trade the strategy takes</label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">You vs the bot</div>
+        <div class="vs">
+          <div class="vs-col you"><span class="lbl">You (paper)</span><span class="mono big2" id="w-eq">--</span><span class="mono small" id="w-pnl"></span></div>
+          <div class="vs-col bot"><span class="lbl" id="b-name">Bot</span><span class="mono big2" id="b-eq">--</span><span class="mono small" id="b-pnl"></span></div>
+        </div>
+        <div class="mini-stats" id="w-stats"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">Open positions</div>
+        <div id="pos-list" class="pos-list"><p class="muted small">No open positions.</p></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="panel wide">
+    <div class="panel-h">Order book &middot; your closed trades <button class="btn btn-xs" id="t-export">Download CSV</button></div>
+    <div class="table-scroll"><table class="tbl" id="hist-tbl"><thead><tr><th>#</th><th>Side</th><th>Strike</th><th>Lots</th><th>Entry</th><th>Exit</th><th>Buy</th><th>Sell</th><th>Exit reason</th><th>Costs</th><th>P&amp;L</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- ============================== SIGNALS ============================== -->
+<section class="page" id="page-signals" hidden>
+  <div class="band band-black tight">
+    <h2 class="pix-h">-&gt; Signal Explorer &lt;--</h2>
+    <p class="muted small">Every candidate signal in the out-of-sample window, the Random Forest's probability p&#770;, its decision, and what actually happened. Click a row to replay it in the terminal.</p>
+    <div class="filters">
+      <label class="lbl" for="s-model">Strategy</label><select id="s-model"></select>
+      <label class="lbl" for="s-side">Side</label><select id="s-side"><option value="all">CE + PE</option><option value="1">CE only</option><option value="-1">PE only</option></select>
+      <label class="lbl" for="s-dec">Decision</label><select id="s-dec"><option value="all">All</option><option value="traded">Traded</option><option value="ok">RF approved</option><option value="rej">RF rejected</option></select>
+      <label class="lbl" for="s-out">Outcome</label><select id="s-out"><option value="all">All</option><option value="1">Hit target</option><option value="0">Missed</option></select>
+    </div>
+    <div class="kpi-row compact" id="s-kpis"></div>
+  </div>
+  <div class="sig-grid">
+    <div class="panel">
+      <div class="panel-h">RF probability vs option return &mdash; each dot is one signal</div>
+      <div class="cbox"><canvas id="s-scatter"></canvas></div>
+      <p class="muted small">Dots right of the dashed &tau; line were approved. Green = premium reached the +12% target first. A useful filter puts more green on the right.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-h">Confusion matrix (out-of-sample)</div>
+      <div id="s-cm" class="cm"></div>
+    </div>
+  </div>
+  <div class="panel wide">
+    <div class="table-scroll tall"><table class="tbl click" id="s-tbl"><thead><tr><th>Time</th><th>Side</th><th>Spot</th><th>Strike</th><th>z</th><th>d %</th><th>p&#770;</th><th>Decision</th><th>Exit</th><th>Option ret.</th><th>Trade P&amp;L</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- ============================== BACKTEST ============================== -->
+<section class="page" id="page-backtest" hidden>
+  <div class="band band-black tight">
+    <h2 class="pix-h">@ Model Variants @</h2>
+    <div class="seg" role="tablist" aria-label="Random Forest on or off">
+      <button class="seg-b active" data-rf="1">With Random Forest</button>
+      <button class="seg-b" data-rf="0">Rule only (control)</button>
+    </div>
+    <p class="muted small" id="bt-window"></p>
+    <div class="model-cards" id="bt-cards"></div>
+  </div>
+
+  <div class="band band-red">
+    <h2 class="pix-h ink">^^ Strategy Performance Comparison ^^</h2>
+    <div class="chart-grid">
+      <div class="paper-card wide2"><div class="pc-h">Equity curve &mdash; &#8377; out-of-sample</div><div class="cbox tall"><canvas id="bt-equity"></canvas></div></div>
+      <div class="paper-card"><div class="pc-h">Net P&amp;L (&#8377;)</div><div class="cbox"><canvas id="bt-pnl"></canvas></div></div>
+      <div class="paper-card"><div class="pc-h">Sharpe ratio (ann.)</div><div class="cbox"><canvas id="bt-sharpe"></canvas></div></div>
+      <div class="paper-card"><div class="pc-h">Max drawdown %</div><div class="cbox"><canvas id="bt-dd"></canvas></div></div>
+      <div class="paper-card"><div class="pc-h">Win rate % / hit rate %</div><div class="cbox"><canvas id="bt-win"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="band band-black">
+    <h2 class="pix-h">! Full metrics !</h2>
+    <p class="muted small">Best value in each row is highlighted. Every number is produced by the Python scripts (<code>model0</code>&ndash;<code>model3</code>) and exported by <code>export_site_data.py</code>.</p>
+    <div class="table-scroll"><table class="tbl metrics" id="bt-table"></table></div>
+  </div>
+
+  <div class="band band-dark">
+    <h2 class="pix-h blue"># Control vs Random Forest #</h2>
+    <p class="muted small">Same rules, same dates, same risk rules and costs. The only difference is whether the Random Forest filters the signals.</p>
+    <div class="chart-grid two">
+      <div class="panel"><div class="panel-h">Net P&amp;L: rule only vs with RF</div><div class="cbox"><canvas id="cv-pnl"></canvas></div></div>
+      <div class="panel"><div class="panel-h">Hit rate of traded signals %</div><div class="cbox"><canvas id="cv-hit"></canvas></div></div>
+    </div>
+    <div class="table-scroll"><table class="tbl" id="cv-table"></table></div>
+    <div class="panel"><div class="panel-h">DUAL + RF &mdash; feature importance (final model)</div><div class="cbox"><canvas id="bt-imp"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ============================== METHOD ============================== -->
+<section class="page" id="page-method" hidden>
+  <div class="band band-pink">
+    <h2 class="pix-h blue">Mathematical formulation</h2>
+    <div class="formula-grid">
+      <div class="f-card"><div class="f-h">1 &middot; VWAP (resets daily)</div><div class="tex">\mathrm{VWAP}_t=\frac{\sum_{i=1}^{t} TP_i V_i}{\sum_{i=1}^{t} V_i},\qquad TP_i=\frac{H_i+L_i+C_i}{3}</div><p>i = first bar of the session.</p></div>
+      <div class="f-card"><div class="f-h">2 &middot; Bollinger Bands (n = 20, k = 2)</div><div class="tex">MA_t=\frac1n\sum_{i=t-n+1}^{t} C_i,\quad \sigma_t=\sqrt{\frac1n\sum_{i=t-n+1}^{t}(C_i-MA_t)^2}</div><div class="tex">U_t=MA_t+k\sigma_t,\quad L_t=MA_t-k\sigma_t,\quad BW_t=\frac{U_t-L_t}{MA_t}</div></div>
+      <div class="f-card"><div class="f-h">3 &middot; z-score and VWAP distance</div><div class="tex">z_t=\frac{C_t-MA_t}{\sigma_t},\qquad d_t=\frac{C_t-\mathrm{VWAP}_t}{\mathrm{VWAP}_t}</div><p>Both feed the Random Forest.</p></div>
+      <div class="f-card"><div class="f-h">4 &middot; Black-Scholes ATM premium</div><div class="tex">d_1=\frac{\ln(S/K)+(r+\tfrac12\sigma^2)T}{\sigma\sqrt T},\quad d_2=d_1-\sigma\sqrt T</div><div class="tex">C=S\Phi(d_1)-Ke^{-rT}\Phi(d_2),\quad P=Ke^{-rT}\Phi(-d_2)-S\Phi(-d_1)</div><p>K = nearest 100, &sigma; = 15%, r = 6%, T = 4 days at entry.</p></div>
+      <div class="f-card"><div class="f-h">5 &middot; Random Forest filter</div><div class="tex">\hat p_t=\frac1B\sum_{b=1}^{B}h_b(\mathbf x_t),\qquad \text{execute iff } \hat p_t\ge\tau</div><p>B = 300 trees, &tau; = 0.5. Label y = 1 if the premium hits +12% before &minus;6% within 12 bars.</p></div>
+      <div class="f-card"><div class="f-h">6 &middot; Position size and Sharpe</div><div class="tex">\text{lots}=\Big\lfloor\frac{0.01\cdot \text{Capital}}{0.06\cdot \text{premium}\cdot \text{lot size}}\Big\rfloor</div><div class="tex">\text{Sharpe}=\frac{\bar r_{day}}{s_{day}}\sqrt{252}</div></div>
+    </div>
+  </div>
+
+  <div class="band band-black">
+    <h2 class="pix-h">Entry and exit rules</h2>
+    <div class="rules">
+      <div class="rule-card ce"><div class="rule-h">BUY CE &nbsp;<span>bullish pullback</span></div><ul id="rule-ce"></ul><div class="rule-f">Buy ATM CE (&Delta; &asymp; +0.5)</div></div>
+      <div class="rule-card pe"><div class="rule-h">BUY PE &nbsp;<span>bearish bounce</span></div><ul id="rule-pe"></ul><div class="rule-f">Buy ATM PE (&Delta; &asymp; &minus;0.5)</div></div>
+    </div>
+    <div class="hold-bar"><b>HOLD</b> when conditions disagree, the RF says no, or a position is already open.</div>
+    <div class="kpi-row" id="rule-kpis"></div>
+  </div>
+
+  <div class="band band-red">
+    <h2 class="pix-h ink">Two-layer architecture and execution pipeline</h2>
+    <ol class="pipeline">
+      <li><b>1</b><span>Data ingestion</span><small>5-min index CSV</small></li>
+      <li><b>2</b><span>Cleaning</span><small>dedupe, sort, session calendar</small></li>
+      <li><b>3</b><span>Indicator engine</span><small>VWAP, Bollinger, z, d, BW</small></li>
+      <li class="hl"><b>4</b><span>Layer 1 signal</span><small>CE / PE candidate rules</small></li>
+      <li class="hl"><b>5</b><span>Layer 2 filter</span><small>Random Forest p&#770; &ge; &tau;</small></li>
+      <li><b>6</b><span>Risk and strike</span><small>ATM, 1% sizing, target / stop</small></li>
+      <li><b>7</b><span>Execution</span><small>paper fills, costs, P&amp;L log</small></li>
+    </ol>
+    <div class="trio">
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Validation</div><p>Walk-forward: the first 6 sessions are training only. After that the Random Forest is retrained before every session using only signals from earlier days, so every result shown is out-of-sample.</p></div>
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Costs</div><p id="cost-text"></p></div>
+      <div class="tape-card"><div class="tape"></div><div class="tc-k">Honest limits</div><p>Option premiums are priced with Black-Scholes because the dataset has no real option chain. The test covers about 16 sessions in one strongly trending month, so treat the ranking of models as the result, not the size of the Sharpe ratio.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== REVIEW 3 ============================== -->
+<section class="page" id="page-review3" hidden>
+  <div class="band band-black">
+    <h2 class="pix-h">-&gt; Review 3: Performance Evaluation &amp; Final Demonstration &lt;--</h2>
+    <p class="muted small">Each evaluation criterion (45 marks) mapped to where it is demonstrated on this site.</p>
+    <div class="table-scroll"><table class="tbl r3" id="r3-table"></table></div>
+  </div>
+</section>
+</main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<footer class="foot">LuminX &middot; ASTRAQUANT X-2026 &middot; Problem Statement 14 &middot; Simulated paper trading on historical data &middot; data generated <span id="gen"></span></footer>
+
+<script src="data.js"></script>
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

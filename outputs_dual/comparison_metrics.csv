@@ -1,0 +1,41 @@
+,VWAP + RF,Bollinger + RF,DUAL (VWAP + BB) + RF
+Total candidate signals,115,81,53
+Train candidates (initial),30,19,12
+Train candidates (final model),110,80,51
+Test candidates (out-of-sample),85,62,41
+RF approved signals,29,28,25
+RF rejected signals,56,34,16
+RF approval rate %,34.1,45.2,61.0
+Blocked by risk rules,"9 (open pos 7, max/day 1, loss cap 1)","3 (open pos 0, max/day 0, loss cap 3)","6 (open pos 3, max/day 1, loss cap 2)"
+Trades taken,20,25,19
+CE / PE,11 / 9,12 / 13,14 / 5
+Accuracy rate %,51.8,54.8,61.0
+Precision %,41.4,50.0,60.0
+Recall %,33.3,50.0,71.4
+F1-score,0.369,0.5,0.652
+TP / FP / TN / FN,12 / 17 / 32 / 24,14 / 14 / 20 / 14,15 / 10 / 10 / 6
+Raw signal hit rate % (no RF),42.4,45.2,51.2
+RF-approved hit rate %,41.4,50.0,60.0
+Net P&L (Rs),4380.0,38395.0,100362.0
+ROI %,0.88,7.68,20.07
+Sharpe (ann.),0.34,2.61,7.24
+Win rate %,35.0,44.0,57.9
+Profit factor,1.04,1.33,2.46
+Avg win (Rs),16323.0,13936.0,15367.0
+Avg loss (Rs),-8452.0,-8208.0,-8585.0
+Total costs (Rs),3836.0,4817.0,3838.0
+Costs % of gross P&L,46.7,11.1,3.7
+Max drawdown %,-7.18,-7.7,-3.15
+Volatility % (ann.),40.45,46.39,43.66
+Risk per trade % (rule),1.0,1.0,1.0
+Avg actual risk per trade %,0.93,0.92,0.95
+Planned reward:risk,2.0 : 1,2.0 : 1,2.0 : 1
+Realised reward:risk,1.93 : 1,1.70 : 1,1.79 : 1
+Break-even win rate %,34.1,37.1,35.8
+Target hit rate %,35.0,44.0,57.9
+Stop-loss hit rate %,65.0,56.0,42.1
+Time / square-off exit rate %,0.0,0.0,0.0
+Max consecutive losses,4,4,2
+Daily loss cap hit (days),4,3,3
+Train time (s),1.42,1.49,1.29
+Inference (ms/signal),5.0,5.0,5.01

@@ -1,0 +1,42 @@
+,0
+Model,VWAP + RF
+Total candidate signals,115
+Train candidates (initial),30
+Train candidates (final model),110
+Test candidates (out-of-sample),85
+RF approved signals,29
+RF rejected signals,56
+RF approval rate %,34.1
+Blocked by risk rules,"9 (open pos 7, max/day 1, loss cap 1)"
+Trades taken,20
+CE / PE,11 / 9
+Accuracy rate %,51.8
+Precision %,41.4
+Recall %,33.3
+F1-score,0.369
+TP / FP / TN / FN,12 / 17 / 32 / 24
+Raw signal hit rate % (no RF),42.4
+RF-approved hit rate %,41.4
+Net P&L (Rs),4380.0
+ROI %,0.88
+Sharpe (ann.),0.34
+Win rate %,35.0
+Profit factor,1.04
+Avg win (Rs),16323.0
+Avg loss (Rs),-8452.0
+Total costs (Rs),3836.0
+Costs % of gross P&L,46.7
+Max drawdown %,-7.18
+Volatility % (ann.),40.45
+Risk per trade % (rule),1.0
+Avg actual risk per trade %,0.93
+Planned reward:risk,2.0 : 1
+Realised reward:risk,1.93 : 1
+Break-even win rate %,34.1
+Target hit rate %,35.0
+Stop-loss hit rate %,65.0
+Time / square-off exit rate %,0.0
+Max consecutive losses,4
+Daily loss cap hit (days),4
+Train time (s),1.42
+Inference (ms/signal),5.23

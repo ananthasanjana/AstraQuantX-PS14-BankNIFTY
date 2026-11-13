@@ -1,0 +1,86 @@
+{
+  "source": "model3_dual_vwap_bb_rf.py (all values read from the code, not from slides)",
+  "data_file": "banknifty_clean_5m.csv",
+  "strategy": "DUAL: VWAP gives direction, Bollinger z-score pullback gives timing, Random Forest approves",
+  "indicators": {
+    "bb_window": 20,
+    "bb_k": 2.0,
+    "dual_pullback_z": 0.5,
+    "vwap": "typical price, resets daily"
+  },
+  "option_pricing": {
+    "model": "Black-Scholes ATM",
+    "iv": 0.15,
+    "rate": 0.06,
+    "days_to_expiry": 4,
+    "strike_step": 100,
+    "note": "Dataset has no real option chain; premiums are priced with Black-Scholes in the Python code."
+  },
+  "capital": 500000,
+  "lot_size": 30,
+  "risk_per_trade": 0.01,
+  "target_pct": 0.12,
+  "stop_pct": 0.06,
+  "max_hold_bars": 12,
+  "max_trades_per_day": 3,
+  "daily_loss_cap_pct": 0.02,
+  "daily_loss_cap_rs": 10000.0,
+  "entry_window": [
+    "09:30",
+    "14:30"
+  ],
+  "square_off": "15:15",
+  "costs": {
+    "tick": 0.05,
+    "slippage_ticks_default": 2,
+    "brokerage_per_order": 20.0,
+    "stt_sell": 0.001,
+    "exchange_txn": 0.0003503,
+    "sebi_fee": 1e-06,
+    "stamp_buy": 3e-05,
+    "gst": 0.18
+  },
+  "rf": {
+    "params": {
+      "n_estimators": 300,
+      "max_depth": 4,
+      "min_samples_leaf": 3,
+      "class_weight": "balanced",
+      "random_state": 42
+    },
+    "tau_default": 0.5,
+    "label": "1 if premium hits +12% before -6% within 12 bars"
+  },
+  "validation": {
+    "method": "walk-forward, RF retrained before every session on earlier sessions only",
+    "warmup_sessions": 6,
+    "train_start": "2026-10-13",
+    "test_start": "2026-10-22",
+    "test_end": "2026-11-13",
+    "sessions_total": 22
+  },
+  "expected": {
+    "ai_model": {
+      "Trades taken": 19,
+      "Net P&L (Rs)": 100362.0,
+      "ROI %": 20.07,
+      "Sharpe (ann.)": 7.24,
+      "Max drawdown %": -3.15,
+      "Win rate %": 57.9,
+      "Profit factor": 2.46,
+      "Accuracy rate %": 61.0,
+      "Precision %": 60.0,
+      "Recall %": 71.4,
+      "F1-score": 0.652
+    },
+    "no_ml": {
+      "Trades taken": 30,
+      "Net P&L (Rs)": 86843.0,
+      "ROI %": 17.37,
+      "Sharpe (ann.)": 5.96,
+      "Max drawdown %": -5.88,
+      "Win rate %": 46.7,
+      "Profit factor": 1.66
+    }
+  }
+}

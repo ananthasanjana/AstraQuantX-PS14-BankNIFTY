@@ -1,0 +1,146 @@
+{
+  "model": "RandomForestClassifier - DUAL (VWAP + Bollinger) meta-filter",
+  "file": "rf_model.joblib",
+  "purpose": "LIVE scoring only. Backtest results come from walk-forward models (review3_signals.csv).",
+  "trained_on": {
+    "sessions": "2026-10-13 -> 2026-11-13",
+    "candidates": 53,
+    "positive_rate": 0.5283
+  },
+  "params": {
+    "n_estimators": 300,
+    "max_depth": 4,
+    "min_samples_leaf": 3,
+    "class_weight": "balanced",
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "label": "1 if the ATM premium hits +12% before -6% within 12 bars",
+  "feature_order": [
+    "d_vwap",
+    "d_vwap_chg3",
+    "vwap_slope6",
+    "z",
+    "BW",
+    "BW_chg5",
+    "ma_slope6",
+    "vol_ratio",
+    "mins_since_open",
+    "ret_1bar",
+    "side"
+  ],
+  "feature_formulas": {
+    "d_vwap": "(close - vwap) / vwap",
+    "d_vwap_chg3": "d_vwap - d_vwap.shift(3)",
+    "vwap_slope6": "vwap.pct_change(6)",
+    "z": "(close - ma20) / sd20   (sd20 = population std, ddof=0)",
+    "BW": "(upper - lower) / ma20   (upper/lower = ma20 +/- 2*sd20)",
+    "BW_chg5": "BW.pct_change(5)",
+    "ma_slope6": "ma20.pct_change(6)",
+    "vol_ratio": "volume / volume.rolling(20).mean()",
+    "mins_since_open": "hour*60 + minute - 555   (minutes since 09:15 IST)",
+    "ret_1bar": "close.pct_change()",
+    "side": "+1 for a BUY_CE candidate, -1 for BUY_PE"
+  },
+  "candidate_rule": {
+    "BUY_CE": "close > vwap AND z[t-1] <= -0.5 AND z[t] > -0.5 AND 09:30 <= time <= 14:30",
+    "BUY_PE": "close < vwap AND z[t-1] >= 0.5 AND z[t] < 0.5 AND 09:30 <= time <= 14:30"
+  },
+  "versions": {
+    "scikit-learn": "1.6.1",
+    "joblib": "1.5.3",
+    "numpy": "2.0.2",
+    "pandas": "2.3.3"
+  },
+  "feature_fixture": [
+    {
+      "datetime": "2026-11-09 13:35:00+05:30",
+      "features": {
+        "d_vwap": 7.94801e-05,
+        "d_vwap_chg3": 0.0019619255,
+        "vwap_slope6": -7.56457e-05,
+        "z": -0.0593375594,
+        "BW": 0.0034178909,
+        "BW_chg5": -0.4050815994,
+        "ma_slope6": -0.0012849237,
+        "vol_ratio": 1.5848359857,
+        "mins_since_open": 260.0,
+        "ret_1bar": 0.0012913758,
+        "side": 1.0
+      },
+      "expected_probability": 0.804091
+    },
+    {
+      "datetime": "2026-11-12 11:50:00+05:30",
+      "features": {
+        "d_vwap": 9.40587e-05,
+        "d_vwap_chg3": 0.0002635191,
+        "vwap_slope6": -5.5766e-05,
+        "z": -0.0983347288,
+        "BW": 0.0030005605,
+        "BW_chg5": -0.035215937,
+        "ma_slope6": -0.0004706835,
+        "vol_ratio": 0.6514726777,
+        "mins_since_open": 155.0,
+        "ret_1bar": 0.0006141195,
+        "side": 1.0
+      },
+      "expected_probability": 0.355644
+    },
+    {
+      "datetime": "2026-11-12 12:50:00+05:30",
+      "features": {
+        "d_vwap": -0.0004064045,
+        "d_vwap_chg3": 0.0008782553,
+        "vwap_slope6": -1.84426e-05,
+        "z": 0.4746919593,
+        "BW": 0.0033753044,
+        "BW_chg5": -0.1613556595,
+        "ma_slope6": -0.0003768483,
+        "vol_ratio": 0.531121867,
+        "mins_since_open": 215.0,
+        "ret_1bar": -0.00146389,
+        "side": -1.0
+      },
+      "expected_probability": 0.424341
+    },
+    {
+      "datetime": "2026-11-13 10:30:00+05:30",
+      "features": {
+        "d_vwap": 0.0012028443,
+        "d_vwap_chg3": 0.0011759789,
+        "vwap_slope6": 8.74044e-05,
+        "z": -0.1096444416,
+        "BW": 0.0122825433,
+        "BW_chg5": -0.1568277508,
+        "ma_slope6": -0.0019175822,
+        "vol_ratio": 0.3190972591,
+        "mins_since_open": 75.0,
+        "ret_1bar": 0.0013907983,
+        "side": 1.0
+      },
+      "expected_probability": 0.7621
+    },
+    {
+      "datetime": "2026-11-13 11:40:00+05:30",
+      "features": {
+        "d_vwap": 0.0001522587,
+        "d_vwap_chg3": 0.0007642146,
+        "vwap_slope6": -5.2994e-05,
+        "z": -0.1121029682,
+        "BW": 0.0036664901,
+        "BW_chg5": 0.0552878099,
+        "ma_slope6": -0.0001240942,
+        "vol_ratio": 0.46903235,
+        "mins_since_open": 145.0,
+        "ret_1bar": 0.00057122,
+        "side": 1.0
+      },
+      "expected_probability": 0.248452
+    }
+  ],
+  "repricing_check": {
+    "candidates": 41,
+    "mismatches": 0
+  }
+}

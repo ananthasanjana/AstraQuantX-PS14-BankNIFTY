@@ -1,0 +1,42 @@
+,0
+Model,Bollinger + RF
+Total candidate signals,81
+Train candidates (initial),19
+Train candidates (final model),80
+Test candidates (out-of-sample),62
+RF approved signals,28
+RF rejected signals,34
+RF approval rate %,45.2
+Blocked by risk rules,"3 (open pos 0, max/day 0, loss cap 3)"
+Trades taken,25
+CE / PE,12 / 13
+Accuracy rate %,54.8
+Precision %,50.0
+Recall %,50.0
+F1-score,0.5
+TP / FP / TN / FN,14 / 14 / 20 / 14
+Raw signal hit rate % (no RF),45.2
+RF-approved hit rate %,50.0
+Net P&L (Rs),38395.0
+ROI %,7.68
+Sharpe (ann.),2.61
+Win rate %,44.0
+Profit factor,1.33
+Avg win (Rs),13936.0
+Avg loss (Rs),-8208.0
+Total costs (Rs),4817.0
+Costs % of gross P&L,11.1
+Max drawdown %,-7.7
+Volatility % (ann.),46.39
+Risk per trade % (rule),1.0
+Avg actual risk per trade %,0.92
+Planned reward:risk,2.0 : 1
+Realised reward:risk,1.70 : 1
+Break-even win rate %,37.1
+Target hit rate %,44.0
+Stop-loss hit rate %,56.0
+Time / square-off exit rate %,0.0
+Max consecutive losses,4
+Daily loss cap hit (days),3
+Train time (s),1.48
+Inference (ms/signal),5.0

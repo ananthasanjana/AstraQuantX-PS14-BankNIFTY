@@ -1,0 +1,27 @@
+,VWAP rule only,Bollinger rule only,DUAL rule only
+Test candidates (out-of-sample),85,62,41
+Blocked by risk rules,"52 (open pos 29, max/day 4, loss cap 19)","22 (open pos 0, max/day 10, loss cap 12)","11 (open pos 7, max/day 2, loss cap 2)"
+Trades taken,33,40,30
+CE / PE,15 / 18,20 / 20,17 / 13
+Accuracy rate %,42.4,45.2,51.2
+Net P&L (Rs),12148.0,66582.0,86843.0
+ROI %,2.43,13.32,17.37
+Sharpe (ann.),0.88,3.54,5.96
+Win rate %,39.4,42.5,46.7
+Profit factor,1.07,1.37,1.66
+Avg win (Rs),14102.0,14461.0,15606.0
+Avg loss (Rs),-8559.0,-7794.0,-8228.0
+Total costs (Rs),6307.0,7732.0,5914.0
+Costs % of gross P&L,34.2,10.4,6.4
+Max drawdown %,-7.41,-5.72,-5.88
+Volatility % (ann.),43.44,59.32,45.88
+Risk per trade % (rule),1.0,1.0,1.0
+Avg actual risk per trade %,0.92,0.93,0.94
+Planned reward:risk,2.0 : 1,2.0 : 1,2.0 : 1
+Realised reward:risk,1.65 : 1,1.86 : 1,1.90 : 1
+Break-even win rate %,37.8,35.0,34.5
+Target hit rate %,39.4,42.5,46.7
+Stop-loss hit rate %,60.6,55.0,46.7
+Time / square-off exit rate %,0.0,2.5,6.7
+Max consecutive losses,5,4,3
+Daily loss cap hit (days),4,5,3
